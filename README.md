@@ -1,15 +1,15 @@
-#TSG2014$BE_3X4|(BQE$BJ,2J2q(B
-QE(Quantifier Elimination$B!"8BNL5-9f>C5n(B)$B$N%"%k%4%j%:%`!"FC$K(BCAD$BK!$K$D$$$F!"<BNc$rB?$/5s$2$FJ,$+$j$d$9$/$7!"$+$D<+J,$NM}2r$N5Z$V8B$jM}O@E*B&LL$r=E;k$7$?@bL@$K$9$k$3$H$rL\I8$K$9$k!#M}2rIT==J,$K$h$k4V0c$$$,4^$^$l$F$$$k$3$H$b==J,$K9M$($i$l$k$N$G8+$D$1$?>l9g$O;XE&$7$F$$$?$@$1$k$H$"$j$,$?$$$G$9!#(B
+#TSG2014冬学期QE分科会
+QE(Quantifier Elimination、限量記号消去)のアルゴリズム、特にCAD法について、実例を多く挙げて分かりやすくし、かつ自分の理解の及ぶ限り理論的側面を重視した説明にすることを目標にする。理解不十分による間違いが含まれていることも十分に考えられるので見つけた場合は指摘していただけるとありがたいです。
 
-## $BFbMF(B
-$B$=$N$&$A=q$/(B
+## 内容
+そのうち書く
 
-## $BF|Dx(B
-### $BBh(B1$B2s(B
-QE$B$N>R2p!"(BQE$B$G$G$-$k$3$H$J$I$N7Z$$OC(B
+## 日程
+### 第1回
+QEの紹介、QEでできることなどの軽い話
 
-### $BBh(B2$B2s(B
-CAD$BK!$N35MW(B
+### 第2回
+CAD法の概要
 
-### $BBh(B3$B2s(B
-$BL$Dj(B
+### 第3回
+未定

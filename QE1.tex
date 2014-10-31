@@ -1,0 +1,124 @@
+\documentclass[a4j,12pt]{jarticle}
+\usepackage{amsmath,amssymb}
+\usepackage[amsmath,thmmarks]{ntheorem}
+\usepackage[dvipdfmx]{graphicx,hyperref}
+\usepackage{framed}
+\title{第1回QE分科会}
+\author{umedaikiti}
+\theoremstyle{break}
+\theorembodyfont{\normalfont}
+\newtheorem{Example}{例}[section]
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{QEとは}
+QE(Quantifier Elimination、限量記号消去)とは限量記号(存在記号、全称記号)を含む一階述語論理式に対し、同値な変形を行い、全称記号や存在記号を除去することである。この分科会では特に、実数係数多項式の等式、不等式からなる論理式に対するQEを扱う。
+
+限量記号を除去すると束縛変数も消えて、自由変数が残る。自由変数を含まない時は真偽の判定問題になる。実数係数多項式の不等式に対するQEのアルゴリズムとしてはCAD(Cylindrical Algebraic Decomposition)法がある。
+
+この分科会ではCAD法の理論を理解することが目的である。
+
+\section{QEでできること}
+\subsection{東ロボくんの話}
+国立情報学研究所のプロジェクト「ロボットは東大に入れるか」(\url{http://21robot.org/})はその名の通り、人工知能に東大の入試問題を解かせようというプロジェクトで、数学の問題を解かせる際にQEを用いている。数学チームのページ(\url{http://21robot.org/research\_activities/math/})も参照。2013年に代ゼミの東大模試の数学で(問題テキストの言語処理の一部で人による介入があったが)文系4問中2問完答、理系6問中2問完答、という結果を残した(富士通のプレスリリース\url{http://pr.fujitsu.com/jp/news/2013/11/25-1.html})。
+
+
+\subsection{解ける問題の例}
+\begin{Example}
+方程式$ax^2 + bx + c = 0$に解が存在する条件を考える。
+これは論理式にすると
+\[\exists x(ax^2 + bx + c = 0)\]
+である。
+同値変形によって$\exists$を除去すると
+\[(a=0 \wedge b=0 \wedge c=0) \vee (a = 0 \wedge b \ne 0) \vee (a \ne 0 \wedge b^2 - 4ac \ge 0)\]
+
+この問題をRedlog (\url{http://www.redlog.eu/})で解いてみる。
+\begin{framed}
+\begin{verbatim}
+load_package redlog;
+rlset R;
+phi := ex({x}, a*x^2+b*x+c=0);
+rlqe phi;
+\end{verbatim}
+\end{framed}
+\end{Example}
+ちなみにrlqeの代わりにrlcadを使うとCAD法によるQEを行う。
+
+\begin{table}[h]
+\begin{center}
+\caption{論理記号とReglogの記法の対応}
+\begin{tabular}{|c|c|}
+\hline
+$\exists$ & ex(\{変数\}, 式) \\
+$\forall$ & all(\{変数\}, 式) \\
+$\lnot$ & not 式 \\
+$\wedge$ & 式 and 式 \\
+$\vee$ & 式 or 式 \\
+$\Rightarrow$ & 式 impl 式 \\
+$\Leftrightarrow$ & 式 equiv 式 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{Example}[\cite{QEの計算アルゴリズムとその応用} P30]
+実数$x$, $y$に対して$3x^2 - 4xy + 6y^2 - 8x - 4y + 3 = 0$が成り立つとき、$x$, $y$の取りうる範囲を求めよ。
+
+xの取りうる範囲とは、xがその範囲内にあるならばあるyが存在して等式を満たすことができ、またその逆も成り立つような範囲である。よって、この問題はQEによって解くことができる。
+\begin{framed}
+\begin{verbatim}
+rlqe ex({y}, 3*x^2-4*x*y+6*y^2-8*x-4*y+3=0);
+\end{verbatim}
+\end{framed}
+によって、存在記号(と$y$)が取り除かれた$x$の2次不等式$x^2-4x+1 \le 0$が得られる。この不等式を解くと$x$の範囲が求められる。
+
+yの範囲は
+\begin{framed}
+\begin{verbatim}
+rlqe ex({x}, 3*x^2-4*x*y+6*y^2-8*x-4*y+3=0);
+\end{verbatim}
+\end{framed}
+とすればよい。
+\end{Example}
+
+\begin{Example}[有理関数]
+今まで実数係数多項式に限って話をしてきたが、不等式を適切に変形することで有理関数も扱うことができる。
+
+例として、$f$と$g$を実数係数の多項式として
+\[ \frac{f}{g} > 0 \wedge g \ne 0 \]
+という、有理関数を含んだ不等式を考える。
+
+これを同値変形すると
+\[ (g > 0 \wedge f > 0) \vee (g < 0 \wedge f < 0)\]
+となり、多項式として扱うことができる。
+
+ここで例に挙げた$>$以外の等号、不等号に対しても同じように変形できる。
+\end{Example}
+
+\begin{Example}[最適化問題]
+\begin{align*}
+f_{1}(x_1, \dots , x_m) &\rho_{1} 0 \\
+f_{2}(x_1, \dots , x_m) &\rho_{2} 0 \\
+\vdots \\
+f_{r}(x_1, \dots , x_m) &\rho_{r} 0
+\end{align*}
+という制約のもと、$g(x_1, \dots , x_m)$を最大化(最小化)する問題を考える。
+
+この問題を解くには、新たな変数$z$を導入して
+\[
+\exists x_1 \dots \exists x_m (f_{1}(x_1, \dots , x_m) \rho_{1} 0 \wedge 
+\dots \wedge f_{r}(x_1, \dots , x_m) \rho_{r} 0 \wedge z - g(x_1, \dots , x_m) = 0)
+\]
+に対するQEを実行すれば、zの範囲が求められるので、解くことができる。
+
+\end{Example}
+
+\section{次回予告}
+次回は例題を通してCAD法の概要について見ていく。
+
+\begin{thebibliography}{99}
+ \bibitem{QEの計算アルゴリズムとその応用} 穴井 宏和, 横山 和弘,『QEの計算アルゴリズムとその応用　数式処理による最適化』東京大学出版会, 2011, ISBN978-4-13-061406-1.
+\end{thebibliography}
+
+\end{document}

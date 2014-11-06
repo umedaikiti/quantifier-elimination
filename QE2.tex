@@ -1,0 +1,152 @@
+\documentclass[a4j, 12pt]{jsarticle}
+\usepackage{amsmath, amssymb}
+\usepackage[amsmath,thmmarks]{ntheorem}
+\usepackage{framed}
+\title{第2回QE分科会}
+\author{umedaikiti}
+\date{\today}
+\theoremstyle{break}
+\theorembodyfont{\normalfont}
+\newtheorem{Definition}{定義}[section]
+\newtheorem{Example}{例}[section]
+\begin{document}
+\maketitle
+
+\section{準備}
+QEの対象となる論理式は同値な変形を繰り返し、冠頭標準形にする。
+冠頭標準形とは
+\begin{equation}
+\label{eq1}
+Q_k x_k \dots Q_1 x_1 \Phi(x_1, \dots , x_n)
+\end{equation}
+($Q_i$($i = 1 , \dots , k$)は限量子($\forall$, $\exists$のいずれか)、$\Phi(x_1, \dots , x_n)$は限量子を含まない)
+の形の論理式である。
+
+以下の議論ではQEの対象となる論理式に現れる不等式、等式は全て
+\[f(x_1, .., x_n) \; \rho \; 0\]
+の形と仮定する($\rho$は$=, \ne, \le, <, \ge, >$の何れか)。この仮定をおいても一般性は失われない(左辺に移項すればいいだけ)。
+
+また、$\Phi(x_1, \dots , x_n)$に現れるすべての多項式の集合を$F_n$とする。
+
+\section{$\mathbb{R} ^ n$の分割}
+$n$変数多項式の集合$F_n$に対して、$\mathbb{R}^n$を分割することを考えていくが、その前に少し定義する。
+
+$F = \{ f_1(x_1, \dots , x_n), \dots , f_r (x_1, \dots , x_n) \}$を実数係数多項式の有限集合とする。
+\begin{Definition}[符号]
+実数$\alpha$に対して、
+\[
+\mathrm{sign}(\alpha) =
+\begin{cases}
++ & (\alpha > 0) \\
+0 & (\alpha = 0) \\
+- & (\alpha < 0)
+\end{cases}
+\]
+と定める。
+
+また、$F = \{ f_1, \dots , f_r\}$と$\alpha \in \mathbb{R} ^ n$に対し、
+\[\mathrm{sign}_{\alpha} (F) = (\mathrm{sign}(f_1(\alpha)), \dots , \mathrm{sign}(f_r(\alpha))) \in \{ +, 0, - \}^r \]
+と定める。
+\end{Definition}
+
+\begin{Definition}[$F$-符号不変]
+$C \subset \mathbb{R} ^ n$が$F$-符号不変であるとは任意の$\alpha , \beta \in C$に対して、$\mathrm{sign}_{\alpha} (F) = \mathrm{sign}_{\beta} (F)$が成り立つことを言う。
+\end{Definition}
+$F_n$-符号不変である$C \subset \mathbb{R} ^ n$に含まれる任意の点$\alpha \in C$で(\ref{eq1})の$\Phi(x_1, \dots , x_n)$の真偽は変わらない。
+
+%% $F_n$の細胞分割とは
+
+\begin{Example}[1変数の符号不変な集合の例]
+$ F_1 = \{ x^2 - x \} $による分割を考える。
+
+$x^2 - x$の(実)根は$x = 0, 1$なので
+\[\mathbb{R} = (-\infty, 0) \cup \{ 0 \} \cup (0, 1) \cup \{ 1 \} \cup (1, \infty)\]
+と分割すると各集合は$F_1$-符号不変である。
+つまり、$(-\infty, 0)$と$(1, \infty)$では$x^2 - x > 0$、$\{ 0 \}$と$\{ 1 \}$では$x^2-x = 0$、$(0, 1)$では$x^2 - x < 0$である。
+\end{Example}
+この例からも明らかなように1変数多項式の有限集合$F_1$に対して、$F_1$-符号不変になるように$\mathbb{R}$を分割するには、$F_1$に含まれる多項式の相異なる実根$\alpha_1 < \dots < \alpha_m$を全て求め、
+\[ \mathbb{R} = (-\infty , \alpha_1) \cup \{ \alpha_1 \} \cup (\alpha_1 , \alpha_2) \cup \dots \cup \{ \alpha_m \} \cup (\alpha_m , \infty)\]
+と分割すれば良い。
+
+\begin{Example}[2変数の符号不変な集合の例]
+\label{ex2}
+$F_2 = \{x^2-2x+y^2\}$の符号を不変にする分割を考える。$f(x, y) = x^2 - 2x + y^2$とする。
+
+$x^2-2x+y^2$を$y$の多項式とみなすと$x^2-2x$の符号によって$y$の実根の数は異なる。
+つまり、$y$の実根の数は
+\begin{itemize}
+ \item $x^2-2x > 0$、つまり$x \in (-\infty, 0) \cup (2, \infty)$のとき0個
+ \item $x^2-2x = 0$、つまり$x \in \{ 0 \} \cup \{ 2 \}$のとき1個($y = 0$)
+ \item $x^2-2x < 0$、つまり$x \in (0,2)$のとき2個($y = \pm \sqrt{2x - x^2}$)
+\end{itemize}
+である。
+
+こうして$x$軸方向の分割
+\begin{equation}
+\label{eq:eq1}
+\mathbb{R} = (-\infty, 0) \cup \{ 0 \} \cup (0, 2) \cup \{ 2 \} \cup (2, \infty)
+\end{equation}
+ができる。このうち一つの連結集合を$I$をとり、$(x, y)$が$I \times \mathbb{R}$を動くとして、$f(x, y)$の符号が一定になるように$I \times \mathbb{R}$を分割していく。
+
+$I = (-\infty, 0)$のとき、$y$の実根は0個なので$f(x,y)$の符号は$y$の値によらず一定(+)である。
+
+$I = \{0\}$のとき、$y$で実根は1個($y=0$)。
+\[
+\mathrm{sign}(f(x,y))=
+\begin{cases}
++ & (x, y) \in I \times (-\infty, 0)\text{のとき} \\
+0 & (x, y) \in I \times \{0\}\text{のとき} \\
++ & (x, y) \in I \times (0, \infty)\text{のとき}
+\end{cases}
+\]
+
+$I = (0, 2)$のとき
+\[
+\mathrm{sign}(f(x,y))=
+\begin{cases}
++ & (x, y) \in \{(x, y) | x \in I \wedge y < -\sqrt{2x - x^2}\}\text{のとき} \\
+0 & (x, y) \in \{(x, y) | x \in I \wedge y = -\sqrt{2x - x^2} \}\text{のとき} \\
+- & (x, y) \in \{(x, y) | x \in I \wedge -\sqrt{2x - x^2} < y < \sqrt{2x - x^2} \}\text{のとき} \\
+0 & (x, y) \in \{(x, y) | x \in I \wedge y = \sqrt{2x - x^2} \}\text{のとき} \\
++ & (x, y) \in \{(x, y) | x \in I \wedge \sqrt{2x - x^2} < y \} \text{のとき}
+\end{cases}
+\]
+$I = \{ 2 \}, (2, \infty)$も同様。
+
+\begin{framed}
+\begin{center}
+この解き方のポイント
+\end{center}
+まず、$n$変数多項式(ここでは$n=2$)のある1つの変数(ここでは$y$)に着目する。
+$F_n$の多項式を$y$の多項式とみなして、その実根の数が変化する条件を求める。
+実根の数は係数によって定まるので、その条件は$y$を含まない$n-1$変数で表される。
+また、(詳細は後日)条件は$n-1$変数多項式の符号の条件として表現される。
+これは$n-1$変数の分割の問題である(ここに現れる$n-1$変数多項式の集合を$F_{n-1}$とおく)。
+これを繰り返すことで1変数にまで落とす。
+1変数多項式の実根を全て求め(その方法も後日)、$\mathbb{R}$を実根によって分割する。
+\end{framed}
+\end{Example}
+
+\section{CADとQEとの関係}
+\begin{Example}[例\ref{ex2}の続き]
+$\exists y(x^2-2x+y^2 \le 0)$に対するQEを考える。
+
+例\ref{ex2}の分割$C$のうち、$(x, y) \in C \Rightarrow f(x, y) \le 0$となる$C$は
+\begin{itemize}
+ \item $\{(0,0) \}$
+ \item $\{(x, y) | 0 < x < 2 \wedge y = \sqrt{2x-x^2}\}$
+ \item $\{(x, y) | 0 < x < 2 \wedge -\sqrt{2x-x^2} < y < \sqrt{2x-x^2}\}$
+ \item $\{(x, y) | 0 < x < 2 \wedge y = -\sqrt{2x-x^2}\}$
+ \item $\{ (2, 0) \}$
+\end{itemize}
+の5つ。
+
+ある$x$に対して$\exists y(x^2-2x+y^2 \le 0)$が成り立つかは、式(\ref{eq:eq1})の各区間$I$ごとに調べればよく、$C \subset I \times \mathbb{R}$となる分割$C$で上の$(x, y) \in C \Rightarrow f(x, y) \le 0$という条件を満たすものが存在するかを確認すればいい。
+
+よって、
+\[\exists y(x^2-2x+y^2 \le 0 \Leftrightarrow x \in \{ 0 \} \cup (0, 2) \cup \{ 2 \} = [0, 2]\]
+\end{Example}
+
+%\section{次回予告}
+
+\end{document}
